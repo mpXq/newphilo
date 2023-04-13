@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 11:08:27 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/04/12 18:33:11 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:59:29 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,13 @@ int	create_threadtab(t_philo *p)
 void	*death_check(void *arg)
 {
 	t_philo		*p;
-	t_boolean	check;
 	int			i;
 
 	p = (t_philo *)arg;
 	while (1)
 	{
 		i = -1;
-		pthread_mutex_lock(&p->data_race);
-		check = p->is_dead;
-		pthread_mutex_unlock(&p->data_race);
-		if (check == TRUE || p->meals_end == TRUE)
+		if (p->is_dead || p->meals_end == TRUE)
 			break ;
 		while (++i < p->nb_of_philo)
 		{

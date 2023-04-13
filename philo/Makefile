@@ -6,7 +6,7 @@
 #    By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 11:52:41 by pfaria-d          #+#    #+#              #
-#    Updated: 2023/04/12 18:39:46 by pfaria-d         ###   ########.fr        #
+#    Updated: 2023/04/13 14:00:30 by pfaria-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ fclean:		clean
 
 datarace:	$(OBJS)
 			@printf "${CLEAR}☂️  ${LIGHTPURPLE}Philosophers ${LIGHTGRAY}compiled\n${NOCOLOR}"
-			@$(GCC) -g -fsanitize=thread $(FLAGS) $(OBJS) -o $(NAME) 
+			@$(GCC) $(FLAGS) -g -fsanitize=thread  $(OBJS) -o $(NAME) 
 			@echo ${NORMINETTE}
 
 re:			fclean $(NAME)
