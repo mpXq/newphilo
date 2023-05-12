@@ -1,0 +1,31 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+all_eat	utilities2.c	/^int	all_eat(t_philo *p)$/;"	f
+create_mutextab	utilities.c	/^int	create_mutextab(t_philo *p)$/;"	f
+create_threadtab	main.c	/^int	create_threadtab(t_philo *p)$/;"	f
+dead	end_checker.c	/^int	dead(t_philo *p, int i)$/;"	f
+death_check	main.c	/^void	*death_check(void *arg)$/;"	f
+destroy_mutextab	utilities.c	/^void	destroy_mutextab(t_philo *p)$/;"	f
+detach_pthreads	main.c	/^void	detach_pthreads(t_philo *p)$/;"	f
+end	end_checker.c	/^int	end(t_philo	*p)$/;"	f
+error_gestion	error_management.c	/^int	error_gestion(int ac, char **av)$/;"	f
+error_printer	error_management.c	/^static int	error_printer(int error)$/;"	f	file:
+ft_atol	error_management.c	/^long	ft_atol(const char *str)$/;"	f
+ft_free	utilities2.c	/^void	ft_free(t_philo	*p)$/;"	f
+ft_sleep	utilities2.c	/^void	ft_sleep(int timeobj, t_philo *p)$/;"	f
+ft_strncmp	phases.c	/^int	ft_strncmp(const char *str1, const char *str2, size_t length)$/;"	f
+gtime	utilities2.c	/^size_t	gtime(void)$/;"	f
+initialize_status	utilities.c	/^static void	initialize_status(t_philo *p)$/;"	f	file:
+initializer	utilities.c	/^t_philo	initializer(char **av)$/;"	f
+is_eating	phases.c	/^void	is_eating(t_philo *p, t_values *v)$/;"	f
+main	main.c	/^int	main(int ac, char **av)$/;"	f
+multiple_philo_case	phases.c	/^void	multiple_philo_case(t_philo *p, t_values *v)$/;"	f
+phases	phases.c	/^void	*phases(void	*arg)$/;"	f
+print_message	phases.c	/^void	print_message(t_philo *p, t_values *v, char *message)$/;"	f
+verif	error_management.c	/^static int	verif(const char *str)$/;"	f	file:
+verif2	error_management.c	/^static int	verif2(const char *str)$/;"	f	file:
+wait_pthreads	utilities.c	/^void	wait_pthreads(t_philo *p)$/;"	f

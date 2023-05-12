@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/04/12 19:14:26 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:40:54 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ void	is_eating(t_philo *p, t_values *v)
 	pthread_mutex_unlock(&p->fork[v->prev]);
 }
 
+static void	multiple_philo_case(t_philo *p, t_values *v)
+{
+	while (p->meals_end == FALSE && p->is_dead == FALSE)
+	{
+		is_eating(p, v);
+		print_message(p, v, CYN "is sleeping" WHT);
+		ft_sleep(p->time_to_sleep, p);
+		print_message(p, v, GRN "is thinking" WHT);
+	}
+}
+
 void	*phases(void	*arg)
 {
 	t_philo		*p;
@@ -73,12 +84,13 @@ void	*phases(void	*arg)
 	v.prev = (i + 1) % p->nb_of_philo;
 	if (i % 2)
 		ft_sleep(100, p);
-	while (p->meals_end == FALSE && p->is_dead == FALSE)
+	if (p->nb_of_philo == 1)
 	{
-		is_eating(p, &v);
-		print_message(p, &v, CYN "is sleeping" WHT);
-		ft_sleep(p->time_to_sleep, p);
-		print_message(p, &v, GRN "is thinking" WHT);
+		print_message(p, &v, MAG"has taken a fork"WHT);
+		ft_sleep(p->time_to_die, p);
+		printf(RED "%lu %d died\n", gtime() - p->start, i + 1);
 	}
+	else
+		multiple_philo_case(p, &v);
 	return (NULL);
 }
