@@ -6,7 +6,7 @@
 #    By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 11:52:41 by pfaria-d          #+#    #+#              #
-#    Updated: 2023/05/12 14:55:18 by pfaria-d         ###   ########.fr        #
+#    Updated: 2023/05/12 15:27:38 by pfaria-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,22 +18,19 @@ CLEAR			= \r\033[K
 LIGHTGRAY		= \033[0;37m
 GREEN			= \033[0;32m
 
-SRC 		= src/main.c \
-			  src/error_management.c \
-			  src/utilities.c \
-			  src/utilities2.c \
-			  src/end_checker.c \
-			  src/phases.c
+SRC 		= src_bonus/main_bonus.c \
+			  src_bonus/error_management_bonus.c \
+			  src_bonus/utilities_bonus.c \
 
 OBJS 		= $(SRC:.c=.o)
 
 GCC 		= gcc
 
-FLAGS		= -Wall -Wextra -Werror -fsanitize=thread
+FLAGS		= -Wall -Wextra -Werror 
 
 RM  = rm -f
 
-NAME = philo
+NAME = philo_bonus
 
 NORM = $(shell norminette | grep Error: | wc -l | awk '{print $1}' | xargs)
 
