@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/12 14:40:54 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/15 11:49:21 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,23 @@ void	*phases(void	*arg)
 	t_philo		*p;
 	t_values	v;
 	static int	i = -1;
+	int			nb;
 
-	i++;
 	p = (t_philo *)arg;
-	v.nb_of_meals = 0;
+	pthread_mutex_lock(&p->data_race);
+	i++;
 	v.index = i;
+	nb = p->nb_of_philo;
+	v.nb_of_meals = 0;
 	v.prev = (i + 1) % p->nb_of_philo;
-	if (i % 2)
+	pthread_mutex_unlock(&p->data_race);
+	if (v.index % 2)
 		ft_sleep(100, p);
-	if (p->nb_of_philo == 1)
+	if (nb == 1)
 	{
 		print_message(p, &v, MAG"has taken a fork"WHT);
 		ft_sleep(p->time_to_die, p);
-		printf(RED "%lu %d died\n", gtime() - p->start, i + 1);
+		print_message(p, &v, RED "died" WHT);
 	}
 	else
 		multiple_philo_case(p, &v);
