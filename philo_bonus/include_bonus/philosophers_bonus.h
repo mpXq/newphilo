@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:19:09 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/12 15:26:43 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:30:34 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@
 typedef int	t_boolean;
 # define TRUE 1
 # define FALSE 0
+
+typedef struct s_philo
+{
+	pthread_t		*threadtab;
+	size_t			start;
+	t_boolean		*is_full;
+	t_boolean		is_dead;
+	t_boolean		meals_end;
+	size_t			*last_meal;
+	int				*index;
+	int				nb_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				as_eaten;
+}	t_philo;
 
 /*		UTILITIES		*/
 
