@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:54:13 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/15 11:50:16 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:43:17 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,17 @@ size_t	gtime(void)
 
 void	ft_sleep(int timeobj, t_philo *p)
 {
-	size_t	time;
+	size_t		time;
+	size_t		nb_of_philo;
+	t_boolean	is_dead;
 
 	time = gtime();
-	while (gtime() - time < (size_t)timeobj && p->is_dead == FALSE)
-		usleep(p->nb_of_philo * 2);
+	pthread_mutex_lock(&p->data_race);
+	nb_of_philo = p->nb_of_philo;
+	is_dead = p->is_dead;
+	pthread_mutex_unlock(&p->data_race);
+	while (gtime() - time < (size_t)timeobj && is_dead == FALSE)
+		usleep(nb_of_philo * 2);
 }
 
 int	all_eat(t_philo *p)

@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:52:53 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/04/12 18:49:25 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:30:31 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ int	dead(t_philo *p, int i)
 {
 	size_t	last_meal;
 	size_t	start;
+	size_t	is_dead;
 
 	pthread_mutex_lock(&p->data_race);
 	start = p->start;
+	is_dead = p->is_dead;
 	last_meal = p->last_meal[i];
 	pthread_mutex_unlock(&p->data_race);
 	if (gtime() - start - last_meal >= (size_t)p->time_to_die
-		&& p->is_dead == FALSE)
+		&& is_dead == FALSE)
 	{
 		pthread_mutex_lock(&p->data_race);
 		p->is_dead = TRUE;

@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/15 11:49:21 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:32:18 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,13 @@ int	ft_strncmp(const char *str1, const char *str2, size_t length)
 
 void	print_message(t_philo *p, t_values *v, char *message)
 {
+	size_t	is_dead;
+
+	pthread_mutex_lock(&p->data_race);
+	is_dead = p->is_dead;
+	pthread_mutex_unlock(&p->data_race);
 	pthread_mutex_lock(&p->voix);
-	if (p->is_dead == FALSE && !p->meals_end)
+	if (is_dead == FALSE && !p->meals_end)
 		printf("%lu %d %s\n", gtime() - p->start, v->index + 1, message);
 	pthread_mutex_unlock(&p->voix);
 }
@@ -87,7 +92,7 @@ void	*phases(void	*arg)
 	v.prev = (i + 1) % p->nb_of_philo;
 	pthread_mutex_unlock(&p->data_race);
 	if (v.index % 2)
-		ft_sleep(100, p);
+		usleep(100);
 	if (nb == 1)
 	{
 		print_message(p, &v, MAG"has taken a fork"WHT);
