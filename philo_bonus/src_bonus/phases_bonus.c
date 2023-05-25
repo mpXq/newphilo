@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phases.c                                           :+:      :+:    :+:   */
+/*   phases_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/25 12:34:42 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:37:16 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "../include_bonus/philosophers_bonus.h"
 
 int	ft_strncmp(const char *str1, const char *str2, size_t length)
 {
@@ -50,7 +50,7 @@ void	is_eating(t_philo *p, t_values *v)
 	sem_wait(p->fork);
 	print_message(p, v, MAG"has taken a fork"WHT);
 	print_message(p, v, BLU "is eating" WHT);
-	p->last_meal[v->index] = gtime() - p->start;
+	p->last_meal = gtime() - p->start;
 	v->nb_of_meals++;
 	if (v->nb_of_meals >= p->as_eaten && p->as_eaten != -1)
 	{
@@ -75,14 +75,10 @@ static void	multiple_philo_case(t_philo *p, t_values *v)
 void	*phases(t_philo *p)
 {
 	t_values	v;
-	static int	i = -1;
 	int			nb;
 
-	i++;
-	v.index = i;
+	v.index = p->index;
 	nb = p->nb_of_philo;
-	v.nb_of_meals = 0;
-	v.prev = (i + 1) % p->nb_of_philo;
 	if (v.index % 2)
 		usleep(100);
 	if (nb == 1)

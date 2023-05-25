@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilities_bonus.c                                  :+:      :+:    :+:   */
+/*   end_checker_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/12 15:17:44 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/25 16:32:22 by pfaria-d         ###   ########.fr       */
+/*   Created: 2023/03/23 12:52:53 by pfaria-d          #+#    #+#             */
+/*   Updated: 2023/05/25 17:24:13 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include_bonus/philosophers_bonus.h"
 
-size_t  gtime(void)
+void	*death_check(t_philo *p)
 {
-	struct timeval  t;
+	int		i;
 
-	gettimeofday(&t, NULL);
-	return (t.tv_sec * 1000 + t.tv_usec / 1000);
+	i = 0;
+	while (1)
+	{
+		if (gtime() - p->start - p->last_meal >= (size_t)p->time_to_die)
+		{
+			memset(&p->is_dead, 1, 1);
+			printf(RED "%lu %d died\n", gtime() - p->start, p->index + 1);
+			break ;
+		}
+		usleep(70);
+	}
+	return (NULL);
 }
-
-void	ft_sleep(int timeobj, t_philo *p)
-{
-	size_t		time;
-	size_t		nb_of_philo;
-	t_boolean	is_dead;
-
-	time = gtime();
-	nb_of_philo = p->nb_of_philo;
-	is_dead = p->is_dead;
-	while (gtime() - time < (size_t)timeobj && is_dead == FALSE)
-		usleep(nb_of_philo * 2);
-}
-
