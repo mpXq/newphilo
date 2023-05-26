@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:19:09 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/25 17:23:57 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:08:32 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				as_eaten;
+	int				status;
 	sem_t			*fork;
 	sem_t			*voix;
 	sem_t			*data_race;
+	sem_t			*miam;
 }	t_philo;
 
 typedef struct s_values
@@ -65,7 +67,7 @@ typedef struct s_values
 
 /*		UTILITIES		*/
 
-size_t  gtime(void);
+size_t	gtime(void);
 void	ft_sleep(int timeobj, t_philo *p);
 
 /*		ERROR_MANAGEMENT		*/

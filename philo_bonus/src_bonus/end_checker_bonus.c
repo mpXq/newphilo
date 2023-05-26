@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:52:53 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/25 17:24:13 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:02:12 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	*death_check(t_philo *p)
 	{
 		if (gtime() - p->start - p->last_meal >= (size_t)p->time_to_die)
 		{
-			memset(&p->is_dead, 1, 1);
-			printf(RED "%lu %d died\n", gtime() - p->start, p->index + 1);
-			break ;
+			sem_wait(p->voix);
+			if (p->is_dead == FALSE)
+				printf(RED "%lu %d died\n", gtime() - p->start, p->index + 1);
+			p->is_dead = TRUE;
+			exit(1);
 		}
-		usleep(70);
+		usleep(100);
 	}
 	return (NULL);
 }

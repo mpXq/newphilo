@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:21:45 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/25 17:32:34 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:05:17 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,38 @@ t_philo	initializer(char **av)
 	return (p);
 }
 
+void	*eat(t_philo *p)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < p->nb_of_philo)
+		sem_wait(p->miam);
+	p->meals_end = TRUE;
+	sem_wait(p->voix);
+	kill(p->philo_tab[0], SIGTERM);
+	printf(GRN "SUCCESS !!!\n");
+	return (NULL);
+}
+
+void	need_to_eat(t_philo *p)
+{
+	pthread_t	food;
+
+	pthread_create(&food, NULL, (void *)eat, p);
+}
+
 int	forktab(t_philo *p)
 {
 	int			i;
 	pthread_t	checker;
 
 	i = -1;
+	if (p->as_eaten)
+		while (++i < p->nb_of_philo)
+			sem_wait(p->miam);
+	i = -1;
 	p->philo_tab = malloc(sizeof(pid_t) * (p->nb_of_philo));
-	printf("%d\n", getpid());
 	while (++i < p->nb_of_philo)
 	{
 		p->philo_tab[i] = fork();
@@ -63,12 +87,14 @@ int	forktab(t_philo *p)
 			phases(p);
 			exit(0);
 		}
-		printf("t = %d\n", p->philo_tab[i]);
 	}
-	printf("%d\n", p->is_dead);
+	if (p->as_eaten > -1)
+		need_to_eat(p);
 	i = -1;
-	while (i < p->nb_of_philo)
-		waitpid(p->philo_tab[i++], 0, 0);
+	waitpid(-1, &p->status, 0);
+	if (WIFEXITED(p->status) || WIFSIGNALED(p->status))
+		while (++i < p->nb_of_philo)
+			kill(p->philo_tab[i], SIGTERM);
 	return (0);
 }
 
@@ -85,6 +111,10 @@ int	sem(t_philo *p)
 	sem_unlink("data_race");
 	p->data_race = sem_open("data_race", O_CREAT | O_EXCL, 0644, 1);
 	if (p->voix == SEM_FAILED)
+		return (1);
+	sem_unlink("miam");
+	p->miam = sem_open("miam", O_CREAT | O_EXCL, 0644, p->nb_of_philo);
+	if (p->miam == SEM_FAILED)
 		return (1);
 	return (0);
 }
