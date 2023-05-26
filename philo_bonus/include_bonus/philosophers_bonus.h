@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:19:09 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 11:08:32 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:14:05 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ typedef struct s_values
 
 size_t	gtime(void);
 void	ft_sleep(int timeobj, t_philo *p);
+t_philo	initializer(char **av);
+void	exit_main(t_philo *p);
+void	need_to_eat(t_philo *p);
 
 /*		ERROR_MANAGEMENT		*/
 
