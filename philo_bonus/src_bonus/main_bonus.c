@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:21:45 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 11:13:07 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:19:55 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,13 @@ void	*eat(t_philo *p)
 		sem_wait(p->miam);
 	p->meals_end = TRUE;
 	sem_wait(p->voix);
-	kill(p->philo_tab[0], SIGTERM);
-	printf(GRN "SUCCESS !!!\n");
+	kill(p->philo_tab[p->nb_of_philo - 1], SIGTERM);
 	return (NULL);
-}
-
-void	need_to_eat(t_philo *p)
-{
-	pthread_t	food;
-
-	pthread_create(&food, NULL, (void *)eat, p);
 }
 
 int	forktab(t_philo *p)
 {
 	int			i;
-	pthread_t	checker;
 
 	i = -1;
 	if (p->as_eaten)
@@ -51,7 +42,7 @@ int	forktab(t_philo *p)
 		{
 			p->index = i;
 			if (p->nb_of_philo != 1)
-				pthread_create(&checker, NULL, (void *)death_check, p);
+				pthread_create(&p->checker, NULL, (void *)death_check, p);
 			phases(p);
 			exit(0);
 		}

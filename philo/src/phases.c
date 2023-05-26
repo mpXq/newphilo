@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/24 11:32:18 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:14:13 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,13 @@ void	*phases(void	*arg)
 {
 	t_philo		*p;
 	t_values	v;
-	static int	i = -1;
 	int			nb;
 
 	p = (t_philo *)arg;
-	pthread_mutex_lock(&p->data_race);
-	i++;
-	v.index = i;
+	v.index = p->index;
 	nb = p->nb_of_philo;
 	v.nb_of_meals = 0;
 	v.prev = (i + 1) % p->nb_of_philo;
-	pthread_mutex_unlock(&p->data_race);
 	if (v.index % 2)
 		usleep(100);
 	if (nb == 1)

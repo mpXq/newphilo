@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:44 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 11:13:01 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:12:02 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ t_philo	initializer(char **av)
 	p.meals_end = FALSE;
 	p.start = gtime();
 	p.as_eaten = -1;
-	p.last_meal = 0;
+	p.success = TRUE;
+	gettimeofday(&p.last_meal, NULL);
 	initialize_status(&p);
 	if (av[5])
 		p.as_eaten = ft_atol(av[5]);
@@ -69,11 +70,22 @@ void	exit_main(t_philo *p)
 {
 	int	i;
 
-	if (p->as_eaten > -1)
-		need_to_eat(p);
+	if (p->as_eaten > -1 && p->nb_of_philo != 1)
+		pthread_create(&p->food, NULL, (void *)eat, p);
 	i = -1;
 	waitpid(-1, &p->status, 0);
 	if (WIFEXITED(p->status) || WIFSIGNALED(p->status))
 		while (++i < p->nb_of_philo)
 			kill(p->philo_tab[i], SIGTERM);
+	pthread_detach(p->food);
+	pthread_detach(p->checker);
+	free(p->philo_tab);
+	free(p->is_full);
+	sem_close(p->fork);
+	sem_close(p->voix);
+	sem_close(p->data_race);
+	i = -1;
+	while (++i < p->nb_of_philo)
+		sem_post(p->miam);
+	sem_close(p->miam);
 }

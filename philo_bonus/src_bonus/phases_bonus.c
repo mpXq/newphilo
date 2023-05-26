@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 11:25:24 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:17:28 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	is_eating(t_philo *p, t_values *v)
 	print_message(p, v, MAG"has taken a fork"WHT);
 	print_message(p, v, BLU "is eating" WHT);
 	sem_wait(p->data_race);
-	p->last_meal = gtime() - p->start;
+	gettimeofday(&p->last_meal, NULL);
 	sem_post(p->data_race);
 	v->nb_of_meals++;
 	if (v->nb_of_meals >= p->as_eaten && p->as_eaten != -1)
