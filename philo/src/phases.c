@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/25 16:14:13 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:32:19 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,14 @@ void	is_eating(t_philo *p, t_values *v)
 
 static void	multiple_philo_case(t_philo *p, t_values *v)
 {
-	while (p->meals_end == FALSE && p->is_dead == FALSE)
+	size_t	is_dead;
+
+	is_dead = FALSE;
+	while (p->meals_end == FALSE && is_dead == FALSE)
 	{
+		pthread_mutex_lock(&p->data_race);
+		is_dead = p->is_dead;
+		pthread_mutex_unlock(&p->data_race);
 		is_eating(p, v);
 		print_message(p, v, CYN "is sleeping" WHT);
 		ft_sleep(p->time_to_sleep, p);
@@ -80,13 +86,17 @@ void	*phases(void	*arg)
 {
 	t_philo		*p;
 	t_values	v;
+	static int	i = -1;
 	int			nb;
 
 	p = (t_philo *)arg;
-	v.index = p->index;
+	pthread_mutex_lock(&p->data_race);
+	i++;
+	v.index = i;
 	nb = p->nb_of_philo;
 	v.nb_of_meals = 0;
 	v.prev = (i + 1) % p->nb_of_philo;
+	pthread_mutex_unlock(&p->data_race);
 	if (v.index % 2)
 		usleep(100);
 	if (nb == 1)

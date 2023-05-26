@@ -6,7 +6,7 @@
 #    By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/19 11:52:41 by pfaria-d          #+#    #+#              #
-#    Updated: 2023/05/25 11:21:31 by pfaria-d         ###   ########.fr        #
+#    Updated: 2023/05/26 16:35:07 by pfaria-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJS 		= $(SRC:.c=.o)
 
 GCC 		= gcc
 
-FLAGS		= -Wall -Wextra -Werror 
+FLAGS		= -Wall -Wextra -Werror -fsanitize=thread 
 
 RM  = rm -f
 
