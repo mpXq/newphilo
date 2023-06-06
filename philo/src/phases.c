@@ -6,11 +6,12 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 16:32:19 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:23:06 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
+#include <stddef.h>
 
 int	ft_strncmp(const char *str1, const char *str2, size_t length)
 {
@@ -32,13 +33,15 @@ int	ft_strncmp(const char *str1, const char *str2, size_t length)
 
 void	print_message(t_philo *p, t_values *v, char *message)
 {
-	size_t	is_dead;
+	size_t		is_dead;
+	t_boolean	meals_end;
 
 	pthread_mutex_lock(&p->data_race);
 	is_dead = p->is_dead;
+	meals_end = p->meals_end;
 	pthread_mutex_unlock(&p->data_race);
 	pthread_mutex_lock(&p->voix);
-	if (is_dead == FALSE && !p->meals_end)
+	if (is_dead == FALSE && !meals_end)
 		printf("%lu %d %s\n", gtime() - p->start, v->index + 1, message);
 	pthread_mutex_unlock(&p->voix);
 }
@@ -67,13 +70,16 @@ void	is_eating(t_philo *p, t_values *v)
 
 static void	multiple_philo_case(t_philo *p, t_values *v)
 {
-	size_t	is_dead;
+	size_t		is_dead;
+	t_boolean	meals_end;
 
 	is_dead = FALSE;
-	while (p->meals_end == FALSE && is_dead == FALSE)
+	meals_end = FALSE;
+	while (meals_end == FALSE && is_dead == FALSE)
 	{
 		pthread_mutex_lock(&p->data_race);
 		is_dead = p->is_dead;
+		meals_end = p->meals_end;
 		pthread_mutex_unlock(&p->data_race);
 		is_eating(p, v);
 		print_message(p, v, CYN "is sleeping" WHT);

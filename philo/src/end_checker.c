@@ -6,11 +6,12 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:52:53 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/24 11:30:31 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:30:43 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
+#include <pthread.h>
 
 int	dead(t_philo *p, int i)
 {
