@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/06/08 11:28:09 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:32:12 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ void	is_eating(t_philo *p, t_values *v)
 	pthread_mutex_lock(&p->fork[v->prev]);
 	print_message(p, v, MAG"has taken a fork"WHT);
 	print_message(p, v, BLU "is eating" WHT);
-	pthread_mutex_lock(&p->data_race);
-	p->last_meal[v->index] = gtime() - p->start;
-	pthread_mutex_unlock(&p->data_race);
 	v->nb_of_meals++;
 	if (v->nb_of_meals >= p->as_eaten && p->as_eaten != -1)
 	{
@@ -64,6 +61,9 @@ void	is_eating(t_philo *p, t_values *v)
 		pthread_mutex_unlock(&p->data_race);
 	}
 	ft_sleep(p->time_to_eat, p);
+	pthread_mutex_lock(&p->data_race);
+	p->last_meal[v->index] = gtime() - p->start;
+	pthread_mutex_unlock(&p->data_race);
 	pthread_mutex_unlock(&p->fork[v->index]);
 	pthread_mutex_unlock(&p->fork[v->prev]);
 }
