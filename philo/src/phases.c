@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:47:19 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/06/06 18:23:06 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:28:09 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,25 @@ void	is_eating(t_philo *p, t_values *v)
 
 static void	multiple_philo_case(t_philo *p, t_values *v)
 {
-	size_t		is_dead;
-	t_boolean	meals_end;
+	t_boolean	ending;
 
-	is_dead = FALSE;
-	meals_end = FALSE;
-	while (meals_end == FALSE && is_dead == FALSE)
+	ending = FALSE;
+	while (ending == FALSE)
 	{
-		pthread_mutex_lock(&p->data_race);
-		is_dead = p->is_dead;
-		meals_end = p->meals_end;
-		pthread_mutex_unlock(&p->data_race);
+		ending = ended(p);
 		is_eating(p, v);
+		ending = ended(p);
+		if (ending == TRUE)
+			break ;
 		print_message(p, v, CYN "is sleeping" WHT);
 		ft_sleep(p->time_to_sleep, p);
+		ending = ended(p);
+		if (ending == TRUE)
+			break ;
 		print_message(p, v, GRN "is thinking" WHT);
+		ending = ended(p);
+		if (ending == TRUE)
+			break ;
 	}
 }
 

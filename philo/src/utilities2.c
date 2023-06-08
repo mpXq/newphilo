@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:54:13 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/23 16:43:17 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:27:58 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,18 @@ void	ft_free(t_philo	*p)
 	p->fork = NULL;
 	free(p->is_full);
 	free(p->last_meal);
+}
+
+t_boolean	ended(t_philo *p)
+{
+	size_t		is_dead;
+	t_boolean	meals_end;
+
+	pthread_mutex_lock(&p->data_race);
+	is_dead = p->is_dead;
+	meals_end = p->meals_end;
+	pthread_mutex_unlock(&p->data_race);
+	if (meals_end == TRUE || is_dead == TRUE)
+		return (TRUE);
+	return (FALSE);
 }

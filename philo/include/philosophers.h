@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 11:15:20 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/06/06 18:28:57 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:27:40 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,27 @@ typedef struct s_values
 }	t_values;
 
 //		UTILITIES		//
-void	detach_pthreads(t_philo *p);
-size_t	gtime(void);
-void	ft_sleep(int timeobj, t_philo *p);
-int		all_eat(t_philo *p);
-void	ft_free(t_philo	*p);
-int		error_gestion(int ac, char **av);
-long	ft_atol(const char *str);
-t_philo	initializer(char **av);
-void	destroy_mutextab(t_philo *p);
-int		create_mutextab(t_philo *p);
-void	wait_pthreads(t_philo *p);
-int		dead(t_philo *p, int i);
-int		end(t_philo	*p);
+void		detach_pthreads(t_philo *p);
+size_t		gtime(void);
+void		ft_sleep(int timeobj, t_philo *p);
+int			all_eat(t_philo *p);
+void		ft_free(t_philo	*p);
+int			error_gestion(int ac, char **av);
+long		ft_atol(const char *str);
+t_philo		initializer(char **av);
+void		destroy_mutextab(t_philo *p);
+int			create_mutextab(t_philo *p);
+void		wait_pthreads(t_philo *p);
+int			dead(t_philo *p, int i);
+int			end(t_philo	*p);
+t_boolean	ended(t_philo *p);
 
 //		PHILO MAIN		//
-size_t	gtime(void);
-void	ft_sleep(int timeobj, t_philo *p);
+size_t		gtime(void);
+void		ft_sleep(int timeobj, t_philo *p);
 
 //		PHILO PHASES	//
-void	*phases(void *arg);
-void	is_eating(t_philo *p, t_values *v);
+void		*phases(void *arg);
+void		is_eating(t_philo *p, t_values *v);
 
 #endif

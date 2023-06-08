@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 11:08:27 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/06/06 18:35:38 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/08 10:29:05 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int ac, char **av)
 		return (free(p.threadtab), free(p.fork), 1);
 	if (p.nb_of_philo != 1)
 		pthread_create(&checker, NULL, &death_check, (void *)&p);
-	/* wait_pthreads(&p); */
+	wait_pthreads(&p);
 	if (p.meals_end == TRUE)
 		printf(GRN "SUCCESS !!!\n");
 	destroy_mutextab(&p);
