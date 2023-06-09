@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:19:09 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 15:12:52 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:32:47 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <semaphore.h>
 # include <fcntl.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 
 typedef int	t_boolean;

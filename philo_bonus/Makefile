@@ -6,7 +6,7 @@
 	#    By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+         #
 	#                                                 +#+#+#+#+#+   +#+            #
 	#    Created: 2023/03/19 11:52:41 by pfaria-d          #+#    #+#              #
-#    Updated: 2023/05/26 16:18:13 by pfaria-d         ###   ########.fr        #
+#    Updated: 2023/06/09 20:50:58 by pfaria-d         ###   ########.fr        #
 	#                                                                              #
 	# **************************************************************************** #
 
@@ -28,8 +28,7 @@ OBJS 		= $(SRC:.c=.o)
 
 GCC 		= gcc
 
-FLAGS		= -Wall -Wextra -Werror #-fsanitize=thread
-
+FLAGS		= -Wall -Wextra -Werror #-fsanitize=address
 RM  = rm -f
 
 NAME = philo_bonus

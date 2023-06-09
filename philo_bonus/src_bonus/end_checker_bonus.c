@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:52:53 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 15:31:37 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:33:04 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	*death_check(t_philo *p)
 {
-	int		i;
 	size_t	start;
 	size_t	last_meal;
 	int		index;
 
-	i = 0;
 	while (1)
 	{
 		sem_wait(p->data_race);

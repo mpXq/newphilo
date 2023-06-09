@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:21:45 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 16:19:55 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:58:45 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	*eat(t_philo *p)
 		sem_wait(p->miam);
 	p->meals_end = TRUE;
 	sem_wait(p->voix);
-	kill(p->philo_tab[p->nb_of_philo - 1], SIGTERM);
+	i = -1;
+	if (p->is_dead == FALSE)
+		while (++i < p->nb_of_philo)
+			kill(p->philo_tab[i], SIGTERM);
 	return (NULL);
 }
 
@@ -34,7 +37,6 @@ int	forktab(t_philo *p)
 		while (++i < p->nb_of_philo)
 			sem_wait(p->miam);
 	i = -1;
-	p->philo_tab = malloc(sizeof(pid_t) * (p->nb_of_philo));
 	while (++i < p->nb_of_philo)
 	{
 		p->philo_tab[i] = fork();

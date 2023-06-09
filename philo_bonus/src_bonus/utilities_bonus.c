@@ -6,11 +6,12 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:44 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/05/26 16:12:02 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:58:28 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include_bonus/philosophers_bonus.h"
+#include <stdlib.h>
 
 size_t	gtime(void)
 {
@@ -41,6 +42,7 @@ static void	initialize_status(t_philo *p)
 	while (i < p->nb_of_philo)
 	{
 		p->is_full[i] = FALSE;
+		p->philo_tab[i] = 0;
 		i++;
 	}
 }
@@ -55,6 +57,7 @@ t_philo	initializer(char **av)
 	p.time_to_die = ft_atol(av[2]);
 	p.time_to_eat = ft_atol(av[3]);
 	p.time_to_sleep = ft_atol(av[4]);
+	p.philo_tab = malloc(p.nb_of_philo * sizeof(pid_t));
 	p.meals_end = FALSE;
 	p.start = gtime();
 	p.as_eaten = -1;
@@ -75,9 +78,13 @@ void	exit_main(t_philo *p)
 	i = -1;
 	waitpid(-1, &p->status, 0);
 	if (WIFEXITED(p->status) || WIFSIGNALED(p->status))
+	{
+		p->is_dead = TRUE;
 		while (++i < p->nb_of_philo)
 			kill(p->philo_tab[i], SIGTERM);
-	pthread_detach(p->food);
+	}
+	if (p->as_eaten > -1)
+		pthread_detach(p->food);
 	pthread_detach(p->checker);
 	free(p->philo_tab);
 	free(p->is_full);
