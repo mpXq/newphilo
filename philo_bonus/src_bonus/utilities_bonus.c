@@ -6,7 +6,7 @@
 /*   By: pfaria-d <pfaria-d@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:17:44 by pfaria-d          #+#    #+#             */
-/*   Updated: 2023/06/09 20:58:28 by pfaria-d         ###   ########.fr       */
+/*   Updated: 2023/06/09 21:09:49 by pfaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ void	exit_main(t_philo *p)
 	waitpid(-1, &p->status, 0);
 	if (WIFEXITED(p->status) || WIFSIGNALED(p->status))
 	{
-		p->is_dead = TRUE;
+		if (p->as_eaten > -1 && p->nb_of_philo != 1)
+			pthread_detach(p->food);
 		while (++i < p->nb_of_philo)
 			kill(p->philo_tab[i], SIGTERM);
 	}
-	if (p->as_eaten > -1)
+	if (p->as_eaten > -1 && p->nb_of_philo != 1 && i == -1)
 		pthread_detach(p->food);
 	pthread_detach(p->checker);
 	free(p->philo_tab);
